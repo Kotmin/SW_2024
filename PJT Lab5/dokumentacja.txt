@@ -1,0 +1,12 @@
+
+
+
+3
+ Przekazanie sterowania przez wskaźnik do pętli głównej mail
+
+
+1. Programowo 10ms a potem 1s
+
+2 . To samo z przerwaniem 10 ms pomiar do 100?
+
+3.Pomiar/zliczenie kolejnych w pętli głównej programu poprzez wskaźnik volatile

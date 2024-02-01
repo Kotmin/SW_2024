@@ -1,0 +1,477 @@
+
+Matrix_kbd_lib.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000228  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000027c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000027c  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002ac  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000060  00000000  00000000  000002e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000977  00000000  00000000  00000348  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000006de  00000000  00000000  00000cbf  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000049b  00000000  00000000  0000139d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  0000009c  00000000  00000000  00001838  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003b0  00000000  00000000  000018d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000488  00000000  00000000  00001c84  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000058  00000000  00000000  0000210c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a0 36       	cpi	r26, 0x60	; 96
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 3e 00 	call	0x7c	; 0x7c <main>
+  74:	0c 94 12 01 	jmp	0x224	; 0x224 <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <main>:
+#include "my_keyboard_lib.h"
+
+int main(void)
+{
+	
+	set_DDR('A');
+  7c:	81 e4       	ldi	r24, 0x41	; 65
+  7e:	0e 94 4a 00 	call	0x94	; 0x94 <set_DDR>
+	//Ledy
+	DDRB =0xFF;
+  82:	8f ef       	ldi	r24, 0xFF	; 255
+  84:	87 bb       	out	0x17, r24	; 23
+	PORTB =0xFF;
+  86:	88 bb       	out	0x18, r24	; 24
+	
+    while (1) 
+    {
+		PORTB = get_key('d', 'A');
+  88:	61 e4       	ldi	r22, 0x41	; 65
+  8a:	84 e6       	ldi	r24, 0x64	; 100
+  8c:	0e 94 ab 00 	call	0x156	; 0x156 <get_key>
+  90:	88 bb       	out	0x18, r24	; 24
+  92:	fa cf       	rjmp	.-12     	; 0x88 <main+0xc>
+
+00000094 <set_DDR>:
+								9,10,11,12,
+								13,14,15,16,
+								0};
+
+void set_DDR(char port_name){
+	switch(port_name){
+  94:	82 34       	cpi	r24, 0x42	; 66
+  96:	71 f0       	breq	.+28     	; 0xb4 <set_DDR+0x20>
+  98:	18 f4       	brcc	.+6      	; 0xa0 <set_DDR+0xc>
+  9a:	81 34       	cpi	r24, 0x41	; 65
+  9c:	31 f0       	breq	.+12     	; 0xaa <set_DDR+0x16>
+  9e:	08 95       	ret
+  a0:	83 34       	cpi	r24, 0x43	; 67
+  a2:	69 f0       	breq	.+26     	; 0xbe <set_DDR+0x2a>
+  a4:	84 34       	cpi	r24, 0x44	; 68
+  a6:	81 f0       	breq	.+32     	; 0xc8 <set_DDR+0x34>
+  a8:	08 95       	ret
+		case 'A':
+		DDRA = 0xF0;
+  aa:	80 ef       	ldi	r24, 0xF0	; 240
+  ac:	8a bb       	out	0x1a, r24	; 26
+		PORTA=0x0F;
+  ae:	8f e0       	ldi	r24, 0x0F	; 15
+  b0:	8b bb       	out	0x1b, r24	; 27
+		
+		break;
+  b2:	08 95       	ret
+		case 'B':
+		DDRB = 0xF0;
+  b4:	80 ef       	ldi	r24, 0xF0	; 240
+  b6:	87 bb       	out	0x17, r24	; 23
+		PORTB=0x0F;
+  b8:	8f e0       	ldi	r24, 0x0F	; 15
+  ba:	88 bb       	out	0x18, r24	; 24
+		
+		break;
+  bc:	08 95       	ret
+		case 'C':
+		DDRC = 0xF0;
+  be:	80 ef       	ldi	r24, 0xF0	; 240
+  c0:	84 bb       	out	0x14, r24	; 20
+		PORTC=0x0F;
+  c2:	8f e0       	ldi	r24, 0x0F	; 15
+  c4:	85 bb       	out	0x15, r24	; 21
+		
+		break;
+  c6:	08 95       	ret
+		
+		case 'D':
+		DDRD = 0xF0;
+  c8:	80 ef       	ldi	r24, 0xF0	; 240
+  ca:	81 bb       	out	0x11, r24	; 17
+		PORTD=0x0F;
+  cc:	8f e0       	ldi	r24, 0x0F	; 15
+  ce:	82 bb       	out	0x12, r24	; 18
+  d0:	08 95       	ret
+
+000000d2 <setPort>:
+}//koniec getKey
+
+
+void setPort(const char port_name, int8_t state)
+{
+	switch(port_name)
+  d2:	82 34       	cpi	r24, 0x42	; 66
+  d4:	59 f0       	breq	.+22     	; 0xec <setPort+0x1a>
+  d6:	18 f4       	brcc	.+6      	; 0xde <setPort+0xc>
+  d8:	81 34       	cpi	r24, 0x41	; 65
+  da:	31 f0       	breq	.+12     	; 0xe8 <setPort+0x16>
+  dc:	08 95       	ret
+  de:	83 34       	cpi	r24, 0x43	; 67
+  e0:	39 f0       	breq	.+14     	; 0xf0 <setPort+0x1e>
+  e2:	84 34       	cpi	r24, 0x44	; 68
+  e4:	39 f0       	breq	.+14     	; 0xf4 <setPort+0x22>
+  e6:	08 95       	ret
+	{
+		case 'A':
+		PORTA = state;
+  e8:	6b bb       	out	0x1b, r22	; 27
+		break;
+  ea:	08 95       	ret
+		case 'B':
+		PORTB = state;
+  ec:	68 bb       	out	0x18, r22	; 24
+		break;
+  ee:	08 95       	ret
+		case 'C':
+		PORTC = state;
+  f0:	65 bb       	out	0x15, r22	; 21
+		break;
+  f2:	08 95       	ret
+		case 'D':
+		PORTD = state;
+  f4:	62 bb       	out	0x12, r22	; 18
+  f6:	08 95       	ret
+
+000000f8 <getPin>:
+}
+int8_t getPin(const char port_name)
+{
+	//int8_t x=0b00001111;
+	int8_t x=0xbF0;
+	switch(port_name)
+  f8:	82 34       	cpi	r24, 0x42	; 66
+  fa:	61 f0       	breq	.+24     	; 0x114 <getPin+0x1c>
+  fc:	18 f4       	brcc	.+6      	; 0x104 <getPin+0xc>
+  fe:	81 34       	cpi	r24, 0x41	; 65
+ 100:	31 f0       	breq	.+12     	; 0x10e <getPin+0x16>
+ 102:	11 c0       	rjmp	.+34     	; 0x126 <getPin+0x2e>
+ 104:	83 34       	cpi	r24, 0x43	; 67
+ 106:	49 f0       	breq	.+18     	; 0x11a <getPin+0x22>
+ 108:	84 34       	cpi	r24, 0x44	; 68
+ 10a:	51 f0       	breq	.+20     	; 0x120 <getPin+0x28>
+ 10c:	0c c0       	rjmp	.+24     	; 0x126 <getPin+0x2e>
+	{
+		case 'A':
+		x = 0x0F & PINA;
+ 10e:	89 b3       	in	r24, 0x19	; 25
+ 110:	8f 70       	andi	r24, 0x0F	; 15
+		break;
+ 112:	08 95       	ret
+		case 'B':
+		x = 0x0F & PINB;
+ 114:	86 b3       	in	r24, 0x16	; 22
+ 116:	8f 70       	andi	r24, 0x0F	; 15
+		break;
+ 118:	08 95       	ret
+		case 'C':
+		x = 0x0F & PINC;
+ 11a:	83 b3       	in	r24, 0x13	; 19
+ 11c:	8f 70       	andi	r24, 0x0F	; 15
+		break;
+ 11e:	08 95       	ret
+		case 'D':
+		x = 0x0F & PIND;
+ 120:	80 b3       	in	r24, 0x10	; 16
+ 122:	8f 70       	andi	r24, 0x0F	; 15
+		break;
+ 124:	08 95       	ret
+	
+}
+int8_t getPin(const char port_name)
+{
+	//int8_t x=0b00001111;
+	int8_t x=0xbF0;
+ 126:	80 ef       	ldi	r24, 0xF0	; 240
+		case 'D':
+		x = 0x0F & PIND;
+		break;
+	}
+	return x;
+}
+ 128:	08 95       	ret
+
+0000012a <translate>:
+
+
+
+int8_t translate(int key_rcode){
+		switch(key_rcode)
+ 12a:	8b 30       	cpi	r24, 0x0B	; 11
+ 12c:	91 05       	cpc	r25, r1
+ 12e:	59 f0       	breq	.+22     	; 0x146 <translate+0x1c>
+ 130:	1c f4       	brge	.+6      	; 0x138 <translate+0xe>
+ 132:	07 97       	sbiw	r24, 0x07	; 7
+ 134:	51 f0       	breq	.+20     	; 0x14a <translate+0x20>
+ 136:	0b c0       	rjmp	.+22     	; 0x14e <translate+0x24>
+ 138:	8d 30       	cpi	r24, 0x0D	; 13
+ 13a:	91 05       	cpc	r25, r1
+ 13c:	51 f0       	breq	.+20     	; 0x152 <translate+0x28>
+ 13e:	0e 97       	sbiw	r24, 0x0e	; 14
+ 140:	31 f4       	brne	.+12     	; 0x14e <translate+0x24>
+		{
+		case 0b00001110:
+			return  1;
+ 142:	81 e0       	ldi	r24, 0x01	; 1
+ 144:	08 95       	ret
+		break;
+		case 0b00001101:
+			return 2;
+			break;
+		case 0b00001011:
+			return 3;
+ 146:	83 e0       	ldi	r24, 0x03	; 3
+ 148:	08 95       	ret
+			break;
+		case 0b00000111:
+			return 4;
+ 14a:	84 e0       	ldi	r24, 0x04	; 4
+ 14c:	08 95       	ret
+			break;
+		default:
+			return 0;
+ 14e:	80 e0       	ldi	r24, 0x00	; 0
+ 150:	08 95       	ret
+		{
+		case 0b00001110:
+			return  1;
+		break;
+		case 0b00001101:
+			return 2;
+ 152:	82 e0       	ldi	r24, 0x02	; 2
+			return 4;
+			break;
+		default:
+			return 0;
+				}
+}
+ 154:	08 95       	ret
+
+00000156 <get_key>:
+}
+
+
+
+int8_t get_key(const char type, const char port_name) 
+{
+ 156:	0f 93       	push	r16
+ 158:	1f 93       	push	r17
+ 15a:	cf 93       	push	r28
+ 15c:	df 93       	push	r29
+ 15e:	16 2f       	mov	r17, r22
+	int8_t x, wiersz=0,liczba =0, state,h_port,l_port;
+	if(type == 'M' | type =='m'){
+ 160:	21 e0       	ldi	r18, 0x01	; 1
+ 162:	8d 34       	cpi	r24, 0x4D	; 77
+ 164:	09 f0       	breq	.+2      	; 0x168 <get_key+0x12>
+ 166:	20 e0       	ldi	r18, 0x00	; 0
+ 168:	91 e0       	ldi	r25, 0x01	; 1
+ 16a:	8d 36       	cpi	r24, 0x6D	; 109
+ 16c:	09 f0       	breq	.+2      	; 0x170 <get_key+0x1a>
+ 16e:	90 e0       	ldi	r25, 0x00	; 0
+ 170:	92 2b       	or	r25, r18
+ 172:	99 f0       	breq	.+38     	; 0x19a <get_key+0x44>
+		state = ~(1<<4); //wstawiamy to zero krocz¹ce, w zasadzie to w tym przypadku nie kroczace
+		setPort(port_name, state);
+ 174:	6f ee       	ldi	r22, 0xEF	; 239
+ 176:	81 2f       	mov	r24, r17
+ 178:	0e 94 69 00 	call	0xd2	; 0xd2 <setPort>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 17c:	8f e3       	ldi	r24, 0x3F	; 63
+ 17e:	9f e1       	ldi	r25, 0x1F	; 31
+ 180:	01 97       	sbiw	r24, 0x01	; 1
+ 182:	f1 f7       	brne	.-4      	; 0x180 <get_key+0x2a>
+ 184:	00 c0       	rjmp	.+0      	; 0x186 <get_key+0x30>
+ 186:	00 00       	nop
+		_delay_ms(20);
+		x = getPin(port_name);
+ 188:	81 2f       	mov	r24, r17
+ 18a:	0e 94 7c 00 	call	0xf8	; 0xf8 <getPin>
+
+			return translate(x);
+ 18e:	08 2e       	mov	r0, r24
+ 190:	00 0c       	add	r0, r0
+ 192:	99 0b       	sbc	r25, r25
+ 194:	0e 94 95 00 	call	0x12a	; 0x12a <translate>
+ 198:	40 c0       	rjmp	.+128    	; 0x21a <get_key+0xc4>
+		
+	}
+	
+	if(type == 'D' | type =='d')
+ 19a:	21 e0       	ldi	r18, 0x01	; 1
+ 19c:	84 34       	cpi	r24, 0x44	; 68
+ 19e:	09 f0       	breq	.+2      	; 0x1a2 <get_key+0x4c>
+ 1a0:	20 e0       	ldi	r18, 0x00	; 0
+ 1a2:	91 e0       	ldi	r25, 0x01	; 1
+ 1a4:	84 36       	cpi	r24, 0x64	; 100
+ 1a6:	09 f0       	breq	.+2      	; 0x1aa <get_key+0x54>
+ 1a8:	90 e0       	ldi	r25, 0x00	; 0
+ 1aa:	92 2b       	or	r25, r18
+ 1ac:	79 f5       	brne	.+94     	; 0x20c <get_key+0xb6>
+
+
+
+int8_t get_key(const char type, const char port_name) 
+{
+	int8_t x, wiersz=0,liczba =0, state,h_port,l_port;
+ 1ae:	80 e0       	ldi	r24, 0x00	; 0
+ 1b0:	34 c0       	rjmp	.+104    	; 0x21a <get_key+0xc4>
+		h_port = getPin(port_name) &0xF0;
+		Tutaj w zasadzie idac za tym pomyslem az sie prosi to skumulowac do 4 bitow w ukladzie 0____WWKK i miec 4 bity wolne, ale to tylko dywagacja
+					*/
+			for(int col=4; col<8; col++) // column
+			{
+				state = ~(1<<col);
+ 1b2:	61 e0       	ldi	r22, 0x01	; 1
+ 1b4:	70 e0       	ldi	r23, 0x00	; 0
+ 1b6:	0c 2e       	mov	r0, r28
+ 1b8:	02 c0       	rjmp	.+4      	; 0x1be <get_key+0x68>
+ 1ba:	66 0f       	add	r22, r22
+ 1bc:	77 1f       	adc	r23, r23
+ 1be:	0a 94       	dec	r0
+ 1c0:	e2 f7       	brpl	.-8      	; 0x1ba <get_key+0x64>
+ 1c2:	60 95       	com	r22
+				setPort(port_name, state);
+ 1c4:	81 2f       	mov	r24, r17
+ 1c6:	0e 94 69 00 	call	0xd2	; 0xd2 <setPort>
+ 1ca:	ef e3       	ldi	r30, 0x3F	; 63
+ 1cc:	ff e1       	ldi	r31, 0x1F	; 31
+ 1ce:	31 97       	sbiw	r30, 0x01	; 1
+ 1d0:	f1 f7       	brne	.-4      	; 0x1ce <get_key+0x78>
+ 1d2:	00 c0       	rjmp	.+0      	; 0x1d4 <get_key+0x7e>
+ 1d4:	00 00       	nop
+				_delay_ms(20);
+				x = getPin(port_name);
+ 1d6:	81 2f       	mov	r24, r17
+ 1d8:	0e 94 7c 00 	call	0xf8	; 0xf8 <getPin>
+				wiersz = translate(x);
+ 1dc:	08 2e       	mov	r0, r24
+ 1de:	00 0c       	add	r0, r0
+ 1e0:	99 0b       	sbc	r25, r25
+ 1e2:	0e 94 95 00 	call	0x12a	; 0x12a <translate>
+ 1e6:	ef e9       	ldi	r30, 0x9F	; 159
+ 1e8:	ff e0       	ldi	r31, 0x0F	; 15
+ 1ea:	31 97       	sbiw	r30, 0x01	; 1
+ 1ec:	f1 f7       	brne	.-4      	; 0x1ea <get_key+0x94>
+ 1ee:	00 c0       	rjmp	.+0      	; 0x1f0 <get_key+0x9a>
+ 1f0:	00 00       	nop
+				_delay_ms(10);
+				if(wiersz != 0)
+ 1f2:	88 23       	and	r24, r24
+ 1f4:	49 f0       	breq	.+18     	; 0x208 <get_key+0xb2>
+					liczba = (wiersz-1)*4 + col - 3;
+ 1f6:	08 2e       	mov	r0, r24
+ 1f8:	00 0c       	add	r0, r0
+ 1fa:	99 0b       	sbc	r25, r25
+ 1fc:	01 97       	sbiw	r24, 0x01	; 1
+ 1fe:	88 0f       	add	r24, r24
+ 200:	88 0f       	add	r24, r24
+ 202:	8c 0f       	add	r24, r28
+ 204:	0d ef       	ldi	r16, 0xFD	; 253
+ 206:	08 0f       	add	r16, r24
+		
+		l_port = getPin(port_name) & 0x0F;
+		h_port = getPin(port_name) &0xF0;
+		Tutaj w zasadzie idac za tym pomyslem az sie prosi to skumulowac do 4 bitow w ukladzie 0____WWKK i miec 4 bity wolne, ale to tylko dywagacja
+					*/
+			for(int col=4; col<8; col++) // column
+ 208:	21 96       	adiw	r28, 0x01	; 1
+ 20a:	03 c0       	rjmp	.+6      	; 0x212 <get_key+0xbc>
+ 20c:	c4 e0       	ldi	r28, 0x04	; 4
+ 20e:	d0 e0       	ldi	r29, 0x00	; 0
+ 210:	00 e0       	ldi	r16, 0x00	; 0
+ 212:	c8 30       	cpi	r28, 0x08	; 8
+ 214:	d1 05       	cpc	r29, r1
+ 216:	6c f2       	brlt	.-102    	; 0x1b2 <get_key+0x5c>
+ 218:	80 2f       	mov	r24, r16
+			return liczba;
+		
+		
+		
+	
+}//koniec getKey
+ 21a:	df 91       	pop	r29
+ 21c:	cf 91       	pop	r28
+ 21e:	1f 91       	pop	r17
+ 220:	0f 91       	pop	r16
+ 222:	08 95       	ret
+
+00000224 <_exit>:
+ 224:	f8 94       	cli
+
+00000226 <__stop_program>:
+ 226:	ff cf       	rjmp	.-2      	; 0x226 <__stop_program>
